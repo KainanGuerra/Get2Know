@@ -28,7 +28,7 @@ It walks the user through a few witty questions — from destiny to dream dates 
 
 ### 1. Clone this repository
 ```bash
-git clone https://github.com/yourusername/get2know.git
+git clone https://github.com/KainanGuerra/get2know.git
 ```
 
 ### 2. Open the project
@@ -60,7 +60,7 @@ const message = encodeURIComponent("Hey 😄 I loved your answers on Get2Know!")
 
 ## 📱 Demo
 
-👉 *[Live Demo (optional link to your GitHub Pages or Vercel site)](https://yourusername.github.io/get2know)*
+👉 *[Live Demo (optional link to your GitHub Pages or Vercel site)](https://KainanGuerra.github.io/get2know)*
 
 ---
 
