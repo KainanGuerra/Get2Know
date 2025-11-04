@@ -156,7 +156,9 @@
   </div>
 
   <div class="faq-container fade" id="faq">
-    <div class="question" id="question">Oi 👋, posso te fazer umas perguntinhas sérias (ou nem tanto)?</div>
+    <div class="question" id="question">
+      Oi 👋, posso te fazer umas perguntinhas sérias (ou nem tanto)?
+    </div>
     <div class="options" id="options">
       <button onclick="nextQuestion()">Manda 😏</button>
       <button onclick="nextQuestion()">Vai, quero ver!</button>
@@ -168,7 +170,7 @@
   </footer>
 
   <script>
-    const yourNumber = "5511966263413";
+    const yourNumber = "5511966263413"; // Seu número (com DDI)
     const questions = [
       {
         text: "Você acredita em destino?",
@@ -232,7 +234,8 @@
     }
 
     function showPhoneInput() {
-      questionEl.textContent = "Hahaha adorei 😍, agora só falta você deixar seu número pra eu te mandar mensagem:";
+      questionEl.textContent =
+        "Hahaha adorei 😍, agora só falta você deixar seu número pra eu te mandar mensagem:";
       optionsEl.innerHTML = `
         <input type="tel" id="phone" placeholder="Ex: 999999999">
         <button class="send-btn" onclick="sendWhatsApp()">Enviar mensagem 💬</button>
@@ -248,7 +251,9 @@
       }
 
       // Monta mensagem com as respostas
-      let message = "Oi 😄 adorei suas perguntas no Get2Know!\n\n Aqui estão minhas respostas: \n";
+      let message = `Oi 😄 adorei suas respostas no Get2Know!\n\n📱 
+                    Meu número é: +${phoneInput}\n\n
+                    Aqui estão minhas respostas:\n`;
       answers.forEach((item, i) => {
         message += `Q${i + 1}: ${item.question}\nA: ${item.answer}\n\n`;
       });
@@ -262,5 +267,4 @@
     updateProgress();
   </script>
 </body>
-
 </html>
