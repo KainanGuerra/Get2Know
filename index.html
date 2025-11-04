@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Get2Know 💙</title>
+  <style>
+    :root {
+      --primary: #0077ff;
+      --secondary: #a0c4ff;
+      --background: #f0f7ff;
+      --text: #1e2a3a;
+    }
+
+    body {
+      background: var(--background);
+      font-family: "Poppins", sans-serif;
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      color: var(--primary);
+      margin: 0;
+    }
+
+    header p {
+      color: #555;
+      font-size: 0.95rem;
+    }
+
+    .progress-bar {
+      width: 90%;
+      max-width: 420px;
+      height: 10px;
+      background: #e0e8f8;
+      border-radius: 10px;
+      margin-bottom: 25px;
+      overflow: hidden;
+    }
+
+    .progress {
+      height: 100%;
+      width: 0%;
+      background: var(--primary);
+      transition: width 0.4s ease;
+    }
+
+    .faq-container {
+      background: #fff;
+      padding: 30px 40px;
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      width: 90%;
+      max-width: 420px;
+      text-align: center;
+      transition: all 0.4s ease;
+    }
+
+    .question {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
+    .options button {
+      display: block;
+      width: 100%;
+      background-color: var(--primary);
+      border: none;
+      color: #fff;
+      padding: 12px;
+      margin: 8px 0;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+      transition: background-color 0.2s ease;
+    }
+
+    .options button:hover {
+      background-color: #005ed8;
+    }
+
+    input {
+      padding: 10px;
+      width: 80%;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+      font-size: 1rem;
+    }
+
+    .send-btn {
+      background: #25d366;
+      color: #fff;
+      padding: 12px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+
+    .send-btn:hover {
+      background: #1ebe5d;
+    }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #666;
+    }
+
+    footer span {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .fade {
+      animation: fadeIn 0.4s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>💙 Get2Know</h1>
+    <p>Um quiz rápido pra ver se o destino tá dando match...</p>
+  </header>
+
+  <div class="progress-bar">
+    <div class="progress" id="progress"></div>
+  </div>
+
+  <div class="faq-container fade" id="faq">
+    <div class="question" id="question">Oi 👋, posso te fazer umas perguntinhas sérias (ou nem tanto)?</div>
+    <div class="options" id="options">
+      <button onclick="nextQuestion()">Manda 😏</button>
+      <button onclick="nextQuestion()">Vai, quero ver!</button>
+    </div>
+  </div>
+
+  <footer>
+    Feito por <span>Kainan Guerra</span> ✨
+  </footer>
+
+  <script>
+    const yourNumber = "5511966263413";
+
+    const questions = [
+      {
+        text: "Você acredita em destino?",
+        options: ["Sim ✨", "Não 😅", "Depende do destino... 😏"]
+      },
+      {
+        text: "Qual seria o primeiro encontro ideal pra você?",
+        options: ["Um café tranquilo ☕", "Um rolê espontâneo 🎢", "Um jantar a dois 🍝"]
+      },
+      {
+        text: "Toparia uma viagem de final de semana com um desconhecido?",
+        options: ["Toparia sim 😎", "Depende do desconhecido 👀", "Já tô fazendo as malas 🧳"]
+      },
+      {
+        text: "Tem disponibilidade na agenda pra casar em outubro de 2028? 💍",
+        options: ["Anotando no Google Calendar 📅", "Já escolhi o traje 😅", "Vamos ver se rola 😏"]
+      }
+    ];
+
+    let step = 0;
+    const totalSteps = questions.length;
+    const faq = document.getElementById("faq");
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+    const progressEl = document.getElementById("progress");
+
+    function updateProgress() {
+      const percent = Math.min((step / totalSteps) * 100, 100);
+      progressEl.style.width = percent + "%";
+    }
+
+    function nextQuestion() {
+      step++;
+      updateProgress();
+
+      faq.classList.remove("fade");
+      void faq.offsetWidth;
+      faq.classList.add("fade");
+
+      if (step <= questions.length - 1) {
+        questionEl.textContent = questions[step].text;
+        optionsEl.innerHTML = "";
+        questions[step].options.forEach(opt => {
+          const btn = document.createElement("button");
+          btn.textContent = opt;
+          btn.onclick = nextQuestion;
+          optionsEl.appendChild(btn);
+        });
+      } else {
+        showPhoneInput();
+      }
+    }
+
+    function showPhoneInput() {
+      questionEl.textContent = "Hahaha adorei 😍, agora só falta você deixar seu número pra eu te mandar mensagem:";
+      optionsEl.innerHTML = `
+        <input type="tel" id="phone" placeholder="Ex: 999999999">
+        <button class="send-btn" onclick="sendWhatsApp()">Enviar mensagem 💬</button>
+      `;
+      updateProgress();
+    }
+
+    function sendWhatsApp() {
+      const phoneInput = document.getElementById("phone").value.replace(/\D/g, "");
+      if (!phoneInput) {
+        alert("Coloca um número válido, vai 😅");
+        return;
+      }
+
+      const message = encodeURIComponent(
+        "Oi 😄 adorei suas respostas no Get2Know... parece que o destino tá dando um empurrãozinho 💫"
+      );
+      window.location.href = `https://wa.me/${yourNumber}?text=${message}`;
+    }
+
+    // Inicializa a barra
+    updateProgress();
+  </script>
+</body>
+</html>
