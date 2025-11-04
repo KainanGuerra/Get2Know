@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -131,8 +132,15 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
     }
   </style>
 </head>
@@ -161,7 +169,6 @@
 
   <script>
     const yourNumber = "5511966263413";
-
     const questions = [
       {
         text: "Você acredita em destino?",
@@ -187,13 +194,21 @@
     const questionEl = document.getElementById("question");
     const optionsEl = document.getElementById("options");
     const progressEl = document.getElementById("progress");
+    const answers = [];
 
     function updateProgress() {
       const percent = Math.min((step / totalSteps) * 100, 100);
       progressEl.style.width = percent + "%";
     }
 
-    function nextQuestion() {
+    function nextQuestion(selectedOption) {
+      if (selectedOption) {
+        answers.push({
+          question: questions[step].text,
+          answer: selectedOption
+        });
+      }
+
       step++;
       updateProgress();
 
@@ -201,13 +216,14 @@
       void faq.offsetWidth;
       faq.classList.add("fade");
 
-      if (step <= questions.length - 1) {
-        questionEl.textContent = questions[step].text;
+      if (step < questions.length) {
+        const q = questions[step];
+        questionEl.textContent = q.text;
         optionsEl.innerHTML = "";
-        questions[step].options.forEach(opt => {
+        q.options.forEach(opt => {
           const btn = document.createElement("button");
           btn.textContent = opt;
-          btn.onclick = nextQuestion;
+          btn.onclick = () => nextQuestion(opt);
           optionsEl.appendChild(btn);
         });
       } else {
@@ -231,14 +247,20 @@
         return;
       }
 
-      const message = encodeURIComponent(
-        "Oi 😄 adorei suas respostas no Get2Know... parece que o destino tá dando um empurrãozinho 💫"
-      );
-      window.location.href = `https://wa.me/${yourNumber}?text=${message}`;
+      // Monta mensagem com as respostas
+      let message = "Oi 😄 adorei suas perguntas no Get2Know!\n\n";
+      answers.forEach((item, i) => {
+        message += `Q${i + 1}: ${item.question}\nA: ${item.answer}\n\n`;
+      });
+      message += "Parece que o destino tá dando um empurrãozinho 💫";
+
+      const encoded = encodeURIComponent(message);
+      window.location.href = `https://wa.me/${yourNumber}?text=${encoded}`;
     }
 
     // Inicializa a barra
     updateProgress();
   </script>
 </body>
+
 </html>
