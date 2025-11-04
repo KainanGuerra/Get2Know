@@ -251,9 +251,7 @@
       }
 
       // Monta mensagem com as respostas
-      let message = `Oi 😄 adorei suas respostas no Get2Know!\n\n📱 
-                    Meu número é: +${phoneInput}\n\n
-                    Aqui estão minhas respostas:\n`;
+      let message = `Oi 😄 adorei suas respostas no Get2Know!\n\n📱Meu número é: +${phoneInput}\n\nAqui estão minhas respostas:\n`;
       answers.forEach((item, i) => {
         message += `Q${i + 1}: ${item.question}\nA: ${item.answer}\n\n`;
       });
